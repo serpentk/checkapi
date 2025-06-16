@@ -62,13 +62,21 @@ executable checkapi
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules:    Api
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.17.2.0
+    build-depends:
+      base ^>=4.17.2.0,
+      servant,
+      servant-server,
+      servant-client,
+      aeson,
+      warp,
+      wai
+    
 
     -- Directories containing source files.
     hs-source-dirs:   app
