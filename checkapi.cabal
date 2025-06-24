@@ -75,7 +75,8 @@ executable checkapi
       servant-client,
       aeson,
       warp,
-      wai
+      wai,
+      hasql
     
 
     -- Directories containing source files.
