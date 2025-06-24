@@ -71,6 +71,7 @@ executable checkapi
     build-depends:
       base ^>=4.17.2.0,
       servant,
+      servant-auth,
       servant-server,
       servant-client,
       aeson,
