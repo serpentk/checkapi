@@ -77,7 +77,8 @@ executable checkapi
       aeson,
       warp,
       wai,
-      hasql
+      hasql,
+      hasql-transaction
     
 
     -- Directories containing source files.
