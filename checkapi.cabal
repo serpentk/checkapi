@@ -62,7 +62,9 @@ executable checkapi
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules:    Api
+    other-modules:
+      Api,
+      Db
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -77,8 +79,12 @@ executable checkapi
       aeson,
       warp,
       wai,
-      hasql,
-      hasql-transaction
+      hasql ^>=1.9.1.2,
+      hasql-transaction,
+      hasql-th,
+      text ^>=2.0.2,
+      bytestring ^>=0.11.5.2,
+      vector ^>=0.13.2.0
     
 
     -- Directories containing source files.

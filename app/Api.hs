@@ -17,6 +17,7 @@ import           System.IO
 type ItemApi =
   "item" :> Get '[JSON] [Item] :<|>
   "item" :> Capture "itemId" Integer :> Get '[JSON] Item
+  --"author" :> Capture "authorId" Integer :> "sentences" :> Get '[JSON] 
 
 itemApi :: Proxy ItemApi
 itemApi = Proxy
