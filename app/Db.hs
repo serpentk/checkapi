@@ -49,8 +49,8 @@ userSentencesSession :: Int32 -> Session (Vector Text)
 userSentencesSession author_id = Session.statement author_id userSentencesStatement
   
 
--- print_user_sentences :: Int32 -> Either Session.SessionError (Vector Text)
-print_user_sentences author_id = do
+getUserSentences :: Int32 -> IO (Either Session.SessionError (Vector Text))
+getUserSentences author_id = do
   Right connection <- Connection.acquire connectionSettings
   Session.run (userSentencesSession author_id) connection
   where
