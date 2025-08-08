@@ -2,8 +2,12 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE OverloadedStrings, QuasiQuotes #-}
 
 module Api where
+import Data.Int
+import qualified Data.Vector
+import Data.Text
 
 import           Data.Aeson
 import           GHC.Generics
@@ -11,16 +15,15 @@ import           Network.Wai
 import           Network.Wai.Handler.Warp
 import           Servant
 import           System.IO
-
+import Db
+import Control.Monad.IO.Class
 -- * api
 
-type ItemApi =
-  "item" :> Get '[JSON] [Item] :<|>
-  "item" :> Capture "itemId" Integer :> Get '[JSON] Item
-  --"author" :> Capture "authorId" Integer :> "sentences" :> Get '[JSON] 
+type SentencesApi =
+  "author" :> Capture "authorId" Int32 :> Get '[JSON] [Sentence]
 
-itemApi :: Proxy ItemApi
-itemApi = Proxy
+sentencesApi :: Proxy SentencesApi
+sentencesApi = Proxy
 
 -- * app
 
@@ -34,36 +37,25 @@ run = do
   runSettings settings =<< mkApp
 
 mkApp :: IO Application
-mkApp = return $ serve itemApi server
+mkApp = return $ serve sentencesApi server
 
-server :: Server ItemApi
+server :: Server SentencesApi
 server =
-  getItems :<|>
-  getItemById
+  getSentencesByAuthorId
 
-getItems :: Handler [Item]
-getItems = return [exampleItem]
+getSentencesByAuthorId :: Int32 -> Handler [Sentence]
+getSentencesByAuthorId authorId = do
+  dbData <- liftIO $ getUserSentences authorId
+  case dbData of
+    Right dataVec -> return [Sentence $ unpack x | x <- Data.Vector.toList dataVec]
+    Left err -> throwError err500
 
-getItemById :: Integer -> Handler Item
-getItemById = \ case
-  0 -> return exampleItem
-  _ -> throwError err404
-
-exampleItem :: Item
-exampleItem = Item 0 "example item"
-
--- * item
-
-data Item
-  = Item {
-    itemId :: Integer,
-    itemText :: String
-  }
+data Sentence
+ = Sentence {
+   sentence :: String
+   }
   deriving (Eq, Show, Generic)
 
-instance ToJSON Item
-instance FromJSON Item
+instance ToJSON Sentence
+instance FromJSON Sentence
 
-data a + b = Foo a b
-
-type X = Int + Bool
