@@ -80,12 +80,12 @@ executable checkapi
       aeson,
       warp,
       wai,
-      hasql ^>=1.9.1.2,
+      hasql >=1.9.1.2,
       hasql-transaction,
       hasql-th,
-      text ^>=2.0.2,
-      bytestring ^>=0.11.5.2,
-      vector ^>=0.13.2.0
+      text >=2.0.2,
+      bytestring >=0.11.5.2,
+      vector >=0.13.2.0
     
 
     -- Directories containing source files.
