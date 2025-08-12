@@ -3,7 +3,6 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE OverloadedStrings, QuasiQuotes #-}
-
 module Api where
 import Data.Int
 import qualified Data.Vector
@@ -32,7 +31,7 @@ run = do
   let port = 3000
       settings =
         setPort port $
-        setBeforeMainLoop (hPutStrLn stderr ("listening on port " ++ show port)) $
+        setBeforeMainLoop (hPutStrLn stderr ("listening on port " ++ Prelude.show port)) $
         defaultSettings
   runSettings settings =<< mkApp
 
